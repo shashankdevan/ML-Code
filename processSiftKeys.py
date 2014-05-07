@@ -32,7 +32,13 @@ def getAllDescriptors(image_list):
     for im in imlist:
         file_name = im.strip().split('.')[0]
         key_file = file_name + ".key"
-        os.system("./../sift <" + im.strip() + " >" + key_file))
+        os.system("./../sift <" + im.strip() + " >" + key_file)
+        processSiftKey(key_file)
+
+    print "shashank"
+    out_file = open("100images_all_descriptors", 'w')
+    for item in result:
+        print>>out_file, item
 
 
 def generateCodebook(descriptor_file):
@@ -91,21 +97,22 @@ def getBOVW(sift_key):
 
 def main():
 
-    cnt = 1
-    dataset = open("nonpeople_dataset", 'w')
-    generateCodebook("small_dataset_descriptors")
+    # cnt = 1
+    # dataset = open("people_dataset", 'w')
+    # generateCodebook("small_dataset_descriptors")
 
-    imlist = open('nonpeople_imlist')
-    for i in range(k):
-        cnt = i
-        cnt += 1
-        os.system("./../sift <" + "nonpeople_" + str(cnt) + ".pgm >" + "nonpeople_" + str(cnt) + ".key")
-        sift_key = open("nonpeople_" + str(cnt) + ".key")
-        BOVW = getBOVW(sift_key)
-        print "instance " + str(cnt) + " added"
-        print>>dataset, BOVW
-        os.system("rm nonpeople_" + str(cnt) + ".key")
+    # imlist = open('nonpeople_imlist')
+    # for i in range(k):
+    #     cnt = i
+    #     cnt += 1
+    #     os.system("./../sift <" + "nonpeople_" + str(cnt) + ".pgm >" + "nonpeople_" + str(cnt) + ".key")
+    #     sift_key = open("nonpeople_" + str(cnt) + ".key")
+    #     BOVW = getBOVW(sift_key)
+    #     print "instance " + str(cnt) + " added"
+    #     print>>dataset, BOVW
+    #     os.system("rm nonpeople_" + str(cnt) + ".key")
 
-    dataset.close()
+    # dataset.close()
+    getAllDescriptors("imlist")
 
 main()
